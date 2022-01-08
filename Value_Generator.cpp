@@ -44,7 +44,7 @@ std::vector<std::vector<int>> getRandomValues()
             while (!passed && resetCounter < 20)
             {
                 int testValue = validNumbers[(rand() % validNumbers.size())];
-                if (verticalTest(x, y, testValue, currentBoard)) // && boxTest(x, y, currentBoard)
+                if (verticalTest(x, y, testValue, currentBoard) && boxTest(x, y, testValue, currentBoard))
                 {
                     currentBoard = addValueToBoard(x, y, testValue, currentBoard);
                     passed = true;
@@ -90,9 +90,49 @@ bool verticalTest(int x, int y, int value, std::vector<std::vector<int>> board)
     return true;
 }
 
-//bool boxTest(int x, int y, std::vector<std::vector<int>> board){
+bool boxTest(int x, int y, int value, std::vector<std::vector<int>> board){
+    std::vector<std::vector<int>> tempBoard = board;
+    tempBoard = addValueToBoard(x, y, value, tempBoard);
 
-//}
+    //Box boundaries
+    int minX;
+    int maxX;
+    int minY;
+    int maxY;
+
+    //Sets the vertical box boundaries (Max is increased by 1 since it won't be included in the for loops)
+    if(x < 3){
+        minX = 0;
+        maxX = 3;
+    }else if(x < 6){
+        minX = 3;
+        maxX = 6;
+    }else{
+        minX = 6;
+        maxX = 9;
+    }
+
+    //Sets the horizontal box boundaries (Max is increased by 1 since it won't be included in the for loops)
+    if(y < 3){
+        minY = 0;
+        maxY = 3;
+    }else if(y < 6){
+        minY = 3;
+        maxY = 6;
+    }else{
+        minY = 6;
+        maxY = 9;
+    }
+
+    for(int tempX = minX; tempX < maxX; tempX++){
+        for(int tempY = minY; tempY < maxY; tempY++){
+            if(tempBoard[x][y] == tempBoard[tempX][tempY] && x != tempX && y != tempY){
+                return false;
+            }
+        }
+    }
+    return true;
+}
 
 std::vector<int> dropValue(std::vector<int> numArray, int value){
     bool removed = false;
