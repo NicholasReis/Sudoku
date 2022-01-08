@@ -20,6 +20,8 @@ int main()
 }
 
 
+
+
 //Displays the board when given the array
 void displayBoard(std::vector<std::vector<int>> board)
 {
