@@ -29,6 +29,8 @@ std::vector<std::vector<int>> getRandomValues()
          {0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
     
+    //If the puzzle is mangled beyond just an x row it will reset the puzzle completely
+    int totalResetCounter = 0;
 
     //Because we need every value 1-9 to remain in the first row
     //in a different order I will just send the rows to swap horizontal positions
@@ -49,13 +51,17 @@ std::vector<std::vector<int>> getRandomValues()
                     currentBoard = addValueToBoard(x, y, testValue, currentBoard);
                     passed = true;
                     validNumbers = dropValue(validNumbers, testValue);
-
                 }else{
                     resetCounter++;
                 }
             }
             if(resetCounter >= 19){
                 x--;
+                totalResetCounter++;
+                if(totalResetCounter == 60){
+                    x = 0;
+                    totalResetCounter = 0;
+                }
                 break;
             }
         }
