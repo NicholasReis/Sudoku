@@ -4,6 +4,7 @@
 #include <time.h>
 
 #include "Value_Generator.cpp"
+#include "Board_Obfuscator.cpp"
 
 
 void displayBoard(std::vector<std::vector<int>>);
@@ -15,7 +16,8 @@ int main()
 
     //Displays the board
     displayBoard(board);
-
+    board = removeValues(board, 60);
+    displayBoard(board);
     return 0;
 }
 
@@ -31,7 +33,11 @@ void displayBoard(std::vector<std::vector<int>> board)
         {
             //Formats the board with a single line dividing cells
             //And a double to divide quadrants (or whatever they are called)
-            std::cout << board[x][y];
+            if(board[x][y] != 0){
+                std::cout << board[x][y];
+            }else{
+                std::cout << " ";
+            }
             if ((y+1) % 3 == 0 && y!= 8)
             {
                 std::cout << " || ";
