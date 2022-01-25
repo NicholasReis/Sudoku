@@ -1,27 +1,29 @@
 #include <iostream>
+#include <vector>
+#include <stdlib.h>
+#include <time.h>
 
-void displayBoard(int[9][9]);
+#include "Value_Generator.cpp"
+
+
+void displayBoard(std::vector<std::vector<int>>);
 
 int main()
 {
-    int board[9][9] = {{0, 2, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 3, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 1, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 7, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 0, 0, 0, 0, 0, 0, 0},
-                     {0, 0, 5, 0, 0, 0, 0, 0, 0}};
+    //Retrieves the random (valid) values and puts them into a 2d vector
+    std::vector<std::vector<int>> board = getRandomValues();
 
+    //Displays the board
     displayBoard(board);
 
     return 0;
 }
 
 
+
+
 //Displays the board when given the array
-void displayBoard(int board[9][9])
+void displayBoard(std::vector<std::vector<int>> board)
 {
     for (int x = 0; x < 9; x++)
     {
@@ -37,10 +39,9 @@ void displayBoard(int board[9][9])
                 std::cout << " | ";
             }
         }//Adds a second line to divide quadrants
-        if((x+1) % 3 ==0){
+        if((x+1) % 3 ==0 && x != 8){
             std::cout << std::endl <<  "----------||-----------||----------";
             std::cout << std::endl <<  "----------||-----------||----------";
-        }else if(x != 8){
         }
         
         std::cout<< std::endl;
