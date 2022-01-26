@@ -5,6 +5,7 @@
 
 #include "Value_Generator.cpp"
 #include "Board_Obfuscator.cpp"
+#include "Sudoku_Solver.cpp"
 
 
 void displayBoard(std::vector<std::vector<int>>);
@@ -18,6 +19,7 @@ int main()
     displayBoard(board);
     board = removeValues(board, 60);
     displayBoard(board);
+    solveable(board);
     return 0;
 }
 

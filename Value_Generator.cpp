@@ -5,6 +5,7 @@
 //Function declarations
 std::vector<std::vector<int>> addValueToBoard(int, int, int, std::vector<std::vector<int>>);
 bool verticalTest(int, int, int, std::vector<std::vector<int>>);
+bool horizontalTest(int, int, int, std::vector<std::vector<int>>);
 bool boxTest(int, int, int, std::vector<std::vector<int>>);
 std::vector<int> dropValue(std::vector<int>, int);
 
@@ -89,6 +90,20 @@ bool verticalTest(int x, int y, int value, std::vector<std::vector<int>> board)
     for (int tempX = 0; tempX < 9; tempX++)
     {
         if (tempBoard[x][y] == tempBoard[tempX][y] && x != tempX)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool horizontalTest(int x, int y, int value, std::vector<std::vector<int>> board)
+{
+    std::vector<std::vector<int>> tempBoard = board;
+    tempBoard = addValueToBoard(x, y, value, tempBoard);
+    for (int tempY = 0; tempY < 9; tempY++)
+    {
+        if (tempBoard[x][y] == tempBoard[x][tempY] && y != tempY)
         {
             return false;
         }
