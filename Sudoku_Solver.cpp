@@ -34,26 +34,37 @@ int timesSolved = 0;
 
 //Checks if the game is solveable
 bool solve(std::vector<std::vector<int>> board){
+    //Creates an array to hold possible values for each cell
     std::vector<std::vector<std::vector<int>>> possibilities;
     
     for(int x = 0; x < 9; x++){
         for(int y = 0; y < 9; y++){
+            //Stores the values of each Y value to put into the possibility cells
             std::vector<std::vector<int>> yValues;
-            if(board[x][y] = 0){ //Never triggers
+            //If the cell is blank
+            if(board[x][y] == 0){
+                //Create a temporary array for the possible cell values
                 std::vector<int> cellPossibilities;
                 std::cout << "[" << x << "][" << y << "]: ";
+                //For each value 1-9 (tests each possible number in the cell)
                 for(int index = 1; index < 10; index++){
+                    //Checks if the test number is valid
                     if(verticalTest(x, y, index, board) && horizontalTest(x, y, index, board) && boxTest(x, y, index, board)){
+                        //If valid, puts it into the temporary array
                         cellPossibilities.push_back(index);
                         std::cout << index << ", ";
                     }
                 }
                 std::cout << std::endl;
+                //Puts the temporary array into the y value array
                 yValues.push_back(cellPossibilities);
             }
+            //Puts the y value array into the permanent array
             possibilities.push_back(yValues);
         }
     }
+
+    //Returns true until I can get the logic to check in
     return true;
 }
 
