@@ -1,5 +1,4 @@
 #ifndef SUDOKU_SOLVER_H
 #define SUDOKU_SOLVER_H
-bool solveable(std::vector<std::vector<int>>);
-bool properSudoku();
+bool solve(std::vector<std::vector<int>>);
 #endif
