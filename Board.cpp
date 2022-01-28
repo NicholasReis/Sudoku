@@ -16,7 +16,7 @@ int main()
 
     //Displays the board
     displayBoard(board);
-    board = removeValues(board, 60);
+    board = removeValues(board, 5);
     displayBoard(board);
     return 0;
 }
