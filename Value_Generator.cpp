@@ -146,14 +146,17 @@ bool boxTest(int x, int y, int value, std::vector< std::vector<int> > board){
 
     for(int tempX = minX; tempX < maxX; tempX++){
         for(int tempY = minY; tempY < maxY; tempY++){
+            //If the value conflicts with any other in the min and max x/y values it will return false
             if(tempBoard[x][y] == tempBoard[tempX][tempY] && x != tempX && y != tempY){
                 return false;
             }
         }
     }
+    //Otherwise returns true
     return true;
 }
 
+//Just a quick way to remove a specific value from an array
 std::vector<int> dropValue(std::vector<int> numArray, int value){
     bool removed = false;
     std::vector<int> tempArr = {};

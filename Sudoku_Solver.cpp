@@ -32,8 +32,6 @@ std::vector< std::vector<int> > removeValues(std::vector< std::vector<int> > boa
                 removalQuota--;
             }
         }
-
-        
     }
     
     return board;
@@ -66,15 +64,18 @@ bool solve(std::vector< std::vector<int> > board){
         }
     }
 
-    
+    //If the puzzle has exactly 1 answer
     if(bruteForceAnswers(possibilities, board, 0) == 1){
+        //Returns true signalling a proper sudoku
         return true;
     }
+
+    //Too many or not enough solutions (should only ever be too many since it's a valid puzzle)
     return false;
 }
 
+
 int bruteForceAnswers(std::vector< std::vector< std::vector<int> > > possibilities, std::vector< std::vector<int> > board, int answers){
-    
     for(int x = 0; x < 9; x++){
         for(int y = 0; y < 9; y++){
             //If this cell is blank apply the possible values
@@ -87,9 +88,9 @@ int bruteForceAnswers(std::vector< std::vector< std::vector<int> > > possibiliti
                         board[x][y] = index;
                         //Removes the applied possible value
                         possibilities[x].erase(possibilities[x].begin()); //<-- Suspect Broke here when possibilities[x][y]. Both seem to work generally the same? Will look into more theory
-                        if(!possibilities[x][y].empty()){
+                        if(!possibilities[x].empty()){
                             //Sends the updated board and new possibilities (will not trigger Y values because this cell is now occupied on the board)
-                            bruteForceAnswers(possibilities, board, answers);
+                            answers += bruteForceAnswers(possibilities, board, answers); //Assigns answer to be accumulated in order to make the recursion work
                         }
                     }
                 }
@@ -97,6 +98,9 @@ int bruteForceAnswers(std::vector< std::vector< std::vector<int> > > possibiliti
             }
         }
     }
+
+    //Increments answer 
     answers++;
+
     return answers;
 }
