@@ -22,10 +22,11 @@ std::vector< std::vector<int> > removeValues(std::vector< std::vector<int> > boa
         
         if(solve(tempBoard)){
             board[x][y] = 0;
+            std::cout << "Removal Quota: " << removalQuota << std::endl;
             removalQuota--;
         }
     }
-
+    std::cout << "Returning Board" <<  std::endl;
     return board;
 }
 
@@ -33,7 +34,6 @@ std::vector< std::vector<int> > removeValues(std::vector< std::vector<int> > boa
 bool solve(std::vector< std::vector<int> > board){
     //Creates an array to hold possible values for each cell
     std::vector< std::vector< std::vector<int> > > possibilities;
-    
     for(int x = 0; x < 9; x++){
         for(int y = 0; y < 9; y++){
             //Stores the values of each Y value to put into the possibility cells
@@ -50,13 +50,30 @@ bool solve(std::vector< std::vector<int> > board){
                         cellPossibilities.push_back(index);
                     }
                 }
-                //Puts the temporary array into the y value array
                 yValues.push_back(cellPossibilities);
             }
-            //Puts the y value array into the permanent array
             possibilities.push_back(yValues);
         }
     }
+
+/*     std::cout << "X Size: " << possibilities.size() <<  std::endl;
+    std::cout << "Y Size: " << possibilities[0].size() <<  std::endl;
+
+    std::cout << "Array: " <<  std::endl;
+    for(int i = 0; i < 9; i++){
+        for(int j = 0; j < 9; j++){
+            std::cout << "[" << i << "][" << j << "]: ";
+            if(!possibilities[i].empty()){
+                std::cout << "T";
+            for(int k : possibilities[i][j]){
+                std::cout << k << std::endl;
+            }
+            std::cout << std::endl;
+            }
+        }
+    } */
+
+    
     
     if(bruteForceAnswers(possibilities, board, 0) == 1){
         return true;
@@ -71,21 +88,24 @@ int bruteForceAnswers(std::vector< std::vector< std::vector<int> > > possibiliti
             //If this cell is blank apply the possible values
             if(board[x][y] == 0){
                 //For each possibility it will apply the answer to the board, remove the value from possibilities and pass it back to this function
-                for(int index : possibilities[x][y]){ //<--- Breaks here
+                for(int index = 0; index < possibilities[x].size(); index++){
                     //Checks if the test number is valid
                     if(verticalTest(x, y, index, board) && horizontalTest(x, y, index, board) && boxTest(x, y, index, board)){
                         //Assigns the board a possible value
                         board[x][y] = index;
                         //Removes the applied possible value
                         possibilities[x][y].erase(possibilities[x][y].begin());
-                        //Sends the updated board and new possibilities (will not trigger Y values because this cell is now occupied on the board)
-                        bruteForceAnswers(possibilities, board, answers);
+                        //if(!possibilities[x].empty()){
+                            //Sends the updated board and new possibilities (will not trigger Y values because this cell is now occupied on the board)
+                            bruteForceAnswers(possibilities, board, answers);
+                        //}
                     }
                 }
+                
             }
         }
     }
-    
+    answers++;
     std::cout << answers << std::endl;//Debug info. Is not reached.
     return answers;
 }
