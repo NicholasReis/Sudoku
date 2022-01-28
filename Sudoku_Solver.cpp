@@ -104,8 +104,8 @@ int bruteForceAnswers(std::vector< std::vector< std::vector<int> > > possibiliti
                 for(int index = 0; index < possibilities[x][y].size(); index++){
                     board[x][y] = possibilities[x][y][index];
                     answers += bruteForceAnswers(possibilities, board, answers);
-                    return answers;
                 }
+                return answers;
             }
         }
     }
