@@ -1,4 +1,3 @@
-#include <iostream>
 #include <vector>
 #include <time.h>
 
@@ -16,17 +15,27 @@ std::vector< std::vector<int> > removeValues(std::vector< std::vector<int> > boa
 
     //While there are more numbers to remove
     while(removalQuota > 0){
+        //Randomly grabs an X and Y coordinate
         int x = (rand()%9);
         int y = (rand()%9);
-        std::vector< std::vector<int> > tempBoard = dropValue(board, x, y);
-        
-        if(solve(tempBoard)){
-            board[x][y] = 0;
-            std::cout << "Removal Quota: " << removalQuota << std::endl;
-            removalQuota--;
+
+        //Creates a temporary board as to not mess with the working one
+        std::vector< std::vector<int> > tempBoard = board;
+        //Makes sure it's not a repeated cell
+        if(tempBoard[x][y] != 0){
+            tempBoard[x][y] = 0;
+            //Solves the board with the new missing piece (ensures only 1 possible solution)
+            if(solve(tempBoard)){
+                //Removes the piece if it's a proper sudoku
+                board[x][y] = 0;
+                //Decrements the quota
+                removalQuota--;
+            }
         }
+
+        
     }
-    std::cout << "Returning Board" <<  std::endl;
+    
     return board;
 }
 
@@ -48,6 +57,7 @@ bool solve(std::vector< std::vector<int> > board){
                     if(verticalTest(x, y, index, board) && horizontalTest(x, y, index, board) && boxTest(x, y, index, board)){
                         //If valid, puts it into the temporary array
                         cellPossibilities.push_back(index);
+                    }else{
                     }
                 }
                 yValues.push_back(cellPossibilities);
@@ -56,24 +66,6 @@ bool solve(std::vector< std::vector<int> > board){
         }
     }
 
-/*     std::cout << "X Size: " << possibilities.size() <<  std::endl;
-    std::cout << "Y Size: " << possibilities[0].size() <<  std::endl;
-
-    std::cout << "Array: " <<  std::endl;
-    for(int i = 0; i < 9; i++){
-        for(int j = 0; j < 9; j++){
-            std::cout << "[" << i << "][" << j << "]: ";
-            if(!possibilities[i].empty()){
-                std::cout << "T";
-            for(int k : possibilities[i][j]){
-                std::cout << k << std::endl;
-            }
-            std::cout << std::endl;
-            }
-        }
-    } */
-
-    
     
     if(bruteForceAnswers(possibilities, board, 0) == 1){
         return true;
@@ -94,11 +86,11 @@ int bruteForceAnswers(std::vector< std::vector< std::vector<int> > > possibiliti
                         //Assigns the board a possible value
                         board[x][y] = index;
                         //Removes the applied possible value
-                        possibilities[x][y].erase(possibilities[x][y].begin());
-                        //if(!possibilities[x].empty()){
+                        possibilities[x].erase(possibilities[x].begin()); //<-- Suspect Broke here when possibilities[x][y]. Both seem to work generally the same? Will look into more theory
+                        if(!possibilities[x][y].empty()){
                             //Sends the updated board and new possibilities (will not trigger Y values because this cell is now occupied on the board)
                             bruteForceAnswers(possibilities, board, answers);
-                        //}
+                        }
                     }
                 }
                 
@@ -106,14 +98,5 @@ int bruteForceAnswers(std::vector< std::vector< std::vector<int> > > possibiliti
         }
     }
     answers++;
-    std::cout << answers << std::endl;//Debug info. Is not reached.
     return answers;
-}
-
-std::vector< std::vector<int> > dropValue(std::vector< std::vector<int> > board, int x, int y){
-    //Creating a new board to test on
-    if(board[x][y] != 0){
-        board[x][y] = 0;
-    }
-    return board;
 }

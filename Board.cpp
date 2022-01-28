@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <stdlib.h>
 #include <time.h>
 
 #include "Value_Generator.cpp"
@@ -14,10 +13,12 @@ int main()
     //Retrieves the random (valid) values and puts them into a 2d vector
     std::vector< std::vector<int> > board = getRandomValues();
 
+    //Removes the pieces to create the puzzle
+    board = removeValues(board, 64);
+
     //Displays the board
     displayBoard(board);
-    board = removeValues(board, 5);
-    displayBoard(board);
+    
     return 0;
 }
 
