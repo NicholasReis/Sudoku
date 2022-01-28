@@ -13,6 +13,9 @@ std::vector<int> possibilitiesToVectorInt(std::vector<int>);
 std::vector< std::vector<int> > removeValues(std::vector< std::vector<int> > board, int removalQuota){
     //Initializes the random timer
     srand(time(0));
+    std::vector< std::vector<int> > preservedBoard = board;
+    int preservedQuota = removalQuota;
+    int failure = 0;
 
     //While there are more numbers to remove
     while(removalQuota > 0){
@@ -30,7 +33,17 @@ std::vector< std::vector<int> > removeValues(std::vector< std::vector<int> > boa
                 //Removes the piece if it's a proper sudoku
                 board[x][y] = 0;
                 //Decrements the quota
+                failure = 0;
                 removalQuota--;
+                std::cout << "Quota Left: " << removalQuota << std::endl;
+            }else{
+                failure++;
+                if(failure > 100){ //I can make a board to test which values have been pulled out and didnt work to get this number exact
+                    board = preservedBoard;
+                    removalQuota = preservedQuota;
+                    failure = 0;
+                    std::cout << "Board Reset-----------------------------------------------------" << std::endl;
+                }
             }
         }
     }
@@ -85,9 +98,12 @@ bool solve(std::vector< std::vector<int> > board){
     */
 
     //If the puzzle has exactly 1 answer
-    if(bruteForceAnswers(possibilities, board, 0) == 1){
+    int answers = bruteForceAnswers(possibilities, board, 0);
+    if(answers == 1){
         //Returns true signalling a proper sudoku
         return true;
+    }else{
+        //std::cout << "Board had: " << answers << std::endl;
     }
 
     //Too many or not enough solutions (should only ever be too many since it's a valid puzzle)
@@ -110,7 +126,6 @@ int bruteForceAnswers(std::vector< std::vector< std::vector<int> > > possibiliti
         }
     }
     answers++;
-    std::cout << "Board completed: " << answers << std::endl;
     return answers;
 }
 
