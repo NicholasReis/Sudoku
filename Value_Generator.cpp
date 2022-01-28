@@ -3,22 +3,22 @@
 #include <time.h>
 
 //Function declarations
-std::vector<std::vector<int>> addValueToBoard(int, int, int, std::vector<std::vector<int>>);
-bool verticalTest(int, int, int, std::vector<std::vector<int>>);
-bool horizontalTest(int, int, int, std::vector<std::vector<int>>);
-bool boxTest(int, int, int, std::vector<std::vector<int>>);
+std::vector< std::vector<int> > addValueToBoard(int, int, int, std::vector< std::vector<int> >);
+bool verticalTest(int, int, int, std::vector< std::vector<int> >);
+bool horizontalTest(int, int, int, std::vector< std::vector<int> >);
+bool boxTest(int, int, int, std::vector< std::vector<int> >);
 std::vector<int> dropValue(std::vector<int>, int);
 
 
 //Will return a valid selection of random values in a 2d vector to the board class
-std::vector<std::vector<int>> getRandomValues()
+std::vector< std::vector<int> > getRandomValues()
 {
 
     //Initializes the random timer
     srand(time(0));
 
     //Empty board so there are no conflicts as we go.
-    std::vector<std::vector<int>> currentBoard =
+    std::vector< std::vector<int> > currentBoard =
         {{0, 0, 0, 0, 0, 0, 0, 0, 0},
          {0, 0, 0, 0, 0, 0, 0, 0, 0},
          {0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -74,7 +74,7 @@ std::vector<std::vector<int>> getRandomValues()
 
 //This function swaps the values and does tests to make sure it's a valid position
 //before returning the updated board
-std::vector<std::vector<int>> addValueToBoard(int x, int y, int value, std::vector<std::vector<int>> board)
+std::vector< std::vector<int> > addValueToBoard(int x, int y, int value, std::vector< std::vector<int> > board)
 {
     //Swaps the position with a random value on the board
     board[x][y] = value;
@@ -83,7 +83,7 @@ std::vector<std::vector<int>> addValueToBoard(int x, int y, int value, std::vect
     return board;
 }
 
-bool verticalTest(int x, int y, int value, std::vector<std::vector<int>> board)
+bool verticalTest(int x, int y, int value, std::vector< std::vector<int> > board)
 {
     std::vector<std::vector<int>> tempBoard = board;
     tempBoard = addValueToBoard(x, y, value, tempBoard);
@@ -97,9 +97,9 @@ bool verticalTest(int x, int y, int value, std::vector<std::vector<int>> board)
     return true;
 }
 
-bool horizontalTest(int x, int y, int value, std::vector<std::vector<int>> board)
+bool horizontalTest(int x, int y, int value, std::vector< std::vector<int> > board)
 {
-    std::vector<std::vector<int>> tempBoard = board;
+    std::vector< std::vector<int> > tempBoard = board;
     tempBoard = addValueToBoard(x, y, value, tempBoard);
     for (int tempY = 0; tempY < 9; tempY++)
     {
@@ -111,8 +111,8 @@ bool horizontalTest(int x, int y, int value, std::vector<std::vector<int>> board
     return true;
 }
 
-bool boxTest(int x, int y, int value, std::vector<std::vector<int>> board){
-    std::vector<std::vector<int>> tempBoard = board;
+bool boxTest(int x, int y, int value, std::vector< std::vector<int> > board){
+    std::vector< std::vector<int> > tempBoard = board;
     tempBoard = addValueToBoard(x, y, value, tempBoard);
 
     //Box boundaries

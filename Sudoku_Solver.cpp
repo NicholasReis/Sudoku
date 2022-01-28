@@ -4,13 +4,13 @@
 
 
 //Function Declarations
-bool solve(std::vector<std::vector<int>>);
-int bruteForceAnswers(std::vector<std::vector<std::vector<int>>>, std::vector<std::vector<int>>, int);
-std::vector<std::vector<int>> dropValue(std::vector<std::vector<int>>, int, int);
+bool solve(std::vector< std::vector<int> >);
+int bruteForceAnswers(std::vector< std::vector< std::vector<int> > >, std::vector< std::vector<int> >, int);
+std::vector< std::vector<int> > dropValue(std::vector< std::vector<int> >, int, int);
 
 //This function will take the current board and number of values to remove before returning
 //the board.
-std::vector<std::vector<int>> removeValues(std::vector<std::vector<int>> board, int removalQuota){
+std::vector< std::vector<int> > removeValues(std::vector< std::vector<int> > board, int removalQuota){
     //Initializes the random timer
     srand(time(0));
 
@@ -18,7 +18,7 @@ std::vector<std::vector<int>> removeValues(std::vector<std::vector<int>> board, 
     while(removalQuota > 0){
         int x = (rand()%9);
         int y = (rand()%9);
-        std::vector<std::vector<int>> tempBoard = dropValue(board, x, y);
+        std::vector< std::vector<int> > tempBoard = dropValue(board, x, y);
         
         if(solve(tempBoard)){
             board[x][y] = 0;
@@ -30,14 +30,14 @@ std::vector<std::vector<int>> removeValues(std::vector<std::vector<int>> board, 
 }
 
 //Checks if the game is solveable
-bool solve(std::vector<std::vector<int>> board){
+bool solve(std::vector< std::vector<int> > board){
     //Creates an array to hold possible values for each cell
-    std::vector<std::vector<std::vector<int>>> possibilities;
+    std::vector< std::vector< std::vector<int> > > possibilities;
     
     for(int x = 0; x < 9; x++){
         for(int y = 0; y < 9; y++){
             //Stores the values of each Y value to put into the possibility cells
-            std::vector<std::vector<int>> yValues;
+            std::vector< std::vector<int> > yValues;
             //If the cell is blank
             if(board[x][y] == 0){
                 //Create a temporary array for the possible cell values
@@ -90,7 +90,7 @@ int bruteForceAnswers(std::vector< std::vector< std::vector<int> > > possibiliti
     return answers;
 }
 
-std::vector<std::vector<int>> dropValue(std::vector<std::vector<int>> board, int x, int y){
+std::vector< std::vector<int> > dropValue(std::vector< std::vector<int> > board, int x, int y){
     //Creating a new board to test on
     if(board[x][y] != 0){
         board[x][y] = 0;

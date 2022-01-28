@@ -7,12 +7,12 @@
 #include "Sudoku_Solver.cpp"
 
 
-void displayBoard(std::vector<std::vector<int>>);
+void displayBoard(std::vector< std::vector<int> >);
 
 int main()
 {
     //Retrieves the random (valid) values and puts them into a 2d vector
-    std::vector<std::vector<int>> board = getRandomValues();
+    std::vector< std::vector<int> > board = getRandomValues();
 
     //Displays the board
     displayBoard(board);
@@ -25,7 +25,7 @@ int main()
 
 
 //Displays the board when given the array
-void displayBoard(std::vector<std::vector<int>> board)
+void displayBoard(std::vector< std::vector<int> > board)
 {
     for (int x = 0; x < 9; x++)
     {
