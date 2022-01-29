@@ -14,7 +14,7 @@ int main()
     std::vector< std::vector<int> > board = getRandomValues();
     displayBoard(board);
     //Removes the pieces to create the puzzle
-    board = removeValues(board, 25);
+    board = removeValues(board, 40);
 
     //Displays the board
     displayBoard(board);

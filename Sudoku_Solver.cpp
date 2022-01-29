@@ -19,41 +19,33 @@ std::vector< std::vector<int> > removeValues(std::vector< std::vector<int> > boa
     std::vector<int> removalQueue;
 
     //While there are more numbers to remove
-    while(removalQuota > 0){
-        bool failed = false;
+    bool success = false;
+    while(!success){
         board = preservedBoard;
         removalQuota = preservedQuota;
         removalQueue = loadQueue(removalQuota);
-
-        int counter = 0;
-        while(counter < removalQueue.size() && !failed){
-
-            int x = removalQueue[counter]/9;
-            int y = removalQueue[counter]%9;
-            
-            //Creates a temporary board as to not mess with the working one
-            std::vector< std::vector<int> > tempBoard = board;
-            
-            tempBoard[x][y] = 0;
-            //Solves the board with the new missing piece (ensures only 1 possible solution)
-            if(solve(tempBoard)){
-                //Removes the piece if it's a proper sudoku
-                board[x][y] = 0;
-
-                //Decrements the quota
-                removalQuota--;
-                std::cout << "Quota Left: " << removalQuota << std::endl;
-            }else{
-                board = preservedBoard;
-                removalQuota = preservedQuota;
-                failed = true;
-                removalQueue = loadQueue(removalQuota);
-                std::cout << "Board Reset-----------------------------------------------------" << std::endl;
-                
-            }
-            counter++;
         
+        for(int index : removalQueue){
+            if(removalQuota > 0){
+                int x = index/9;
+                int y = index%9;
+            
+                //Creates a temporary board as to not mess with the working one
+                std::vector< std::vector<int> > tempBoard = board;
+            
+                tempBoard[x][y] = 0;
+                //Solves the board with the new missing piece (ensures only 1 possible solution)
+                if(solve(tempBoard)){
+                    //Removes the piece if it's a proper sudoku
+                    board[x][y] = 0;
+                    removalQuota--;
+                }
+            }else{
+                success = true;
+            }
         }
+
+        std::cout << "Quota: " << removalQuota << std::endl;
     }
 
     return board;
@@ -91,7 +83,7 @@ bool solve(std::vector< std::vector<int> > board){
         //Returns true signalling a proper sudoku
         return true;
     }else{
-        std::cout << "Board had: " << answers << std::endl;
+        //std::cout << "Board had: " << answers << std::endl;
     }
 
     //Too many or not enough solutions (should only ever be too many since it's a valid puzzle)
