@@ -2,6 +2,7 @@
 bool solve(std::vector< std::vector<int> >);
 int bruteForceAnswers(std::vector< std::vector< std::vector<int> > >, std::vector< std::vector<int> >, int);
 std::vector<int> loadQueue(int);
+
 //This function will take the current board and number of values to remove before returning
 //the board.
 std::vector< std::vector<int> > removeValues(std::vector< std::vector<int> > board, int removalQuota){
@@ -34,7 +35,6 @@ std::vector< std::vector<int> > removeValues(std::vector< std::vector<int> > boa
                 if(solve(tempBoard)){
                     //Removes the piece if it's a proper sudoku
                     board[x][y] = 0;
-                    std::cout<<"Removed: " << "[" << x << "][" << y << "]" << "(" << index << ")" << std::endl;
                     removalQuota--;
                 }
             }
@@ -106,11 +106,10 @@ std::vector<int> loadQueue(int quota){
     }
     for(int count = 0; count < 81; count++){
         int tempVal = rand()%validNumbers.size();
-        std::cout << validNumbers[tempVal] << std::endl;
 
         queue.push_back(validNumbers[tempVal]);
 
-        dropValue(validNumbers, validNumbers[tempVal]);
+        validNumbers = dropValue(validNumbers, validNumbers[tempVal]);
 
     }
 
