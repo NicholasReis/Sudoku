@@ -1,6 +1,3 @@
-#include <vector>
-#include <time.h>
-
 //Function declarations
 std::vector< std::vector<int> > addValueToBoard(int, int, int, std::vector< std::vector<int> >);
 bool verticalTest(int, int, int, std::vector< std::vector<int> >);

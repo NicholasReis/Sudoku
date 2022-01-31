@@ -1,12 +1,7 @@
-#include <vector>
-#include <time.h>
-
-
 //Function Declarations
 bool solve(std::vector< std::vector<int> >);
 int bruteForceAnswers(std::vector< std::vector< std::vector<int> > >, std::vector< std::vector<int> >, int);
 std::vector<int> loadQueue(int);
-
 //This function will take the current board and number of values to remove before returning
 //the board.
 std::vector< std::vector<int> > removeValues(std::vector< std::vector<int> > board, int removalQuota){
@@ -14,13 +9,14 @@ std::vector< std::vector<int> > removeValues(std::vector< std::vector<int> > boa
     srand(time(0));
     std::vector< std::vector<int> > preservedBoard = board;
     int preservedQuota = removalQuota;
+
+    //Initialized here because of it's static size
+    std::vector< std::vector<int> > tempBoard;
     
-
     std::vector<int> removalQueue;
-
     //While there are more numbers to remove
-    bool success = false;
-    while(!success){
+    while(removalQuota > 0){
+        //Sets to original state
         board = preservedBoard;
         removalQuota = preservedQuota;
         removalQueue = loadQueue(removalQuota);
@@ -30,22 +26,19 @@ std::vector< std::vector<int> > removeValues(std::vector< std::vector<int> > boa
                 int x = index/9;
                 int y = index%9;
             
-                //Creates a temporary board as to not mess with the working one
-                std::vector< std::vector<int> > tempBoard = board;
+                //Assigns a temporary board as to not mess with the working one
+                 tempBoard = board;
             
                 tempBoard[x][y] = 0;
                 //Solves the board with the new missing piece (ensures only 1 possible solution)
                 if(solve(tempBoard)){
                     //Removes the piece if it's a proper sudoku
                     board[x][y] = 0;
+                    std::cout<<"Removed: " << "[" << x << "][" << y << "]" << "(" << index << ")" << std::endl;
                     removalQuota--;
                 }
-            }else{
-                success = true;
             }
         }
-
-        std::cout << "Quota: " << removalQuota << std::endl;
     }
 
     return board;
@@ -82,10 +75,7 @@ bool solve(std::vector< std::vector<int> > board){
     if(answers == 1){
         //Returns true signalling a proper sudoku
         return true;
-    }else{
-        //std::cout << "Board had: " << answers << std::endl;
     }
-
     //Too many or not enough solutions (should only ever be too many since it's a valid puzzle)
     return false;
 }
@@ -114,12 +104,13 @@ std::vector<int> loadQueue(int quota){
     for(int val = 0; val < 81; val++){
         validNumbers.push_back(val);
     }
-    for(int count = 0; count < quota; count++){
+    for(int count = 0; count < 81; count++){
         int tempVal = rand()%validNumbers.size();
+        std::cout << validNumbers[tempVal] << std::endl;
 
-        queue.push_back(tempVal);
+        queue.push_back(validNumbers[tempVal]);
 
-        dropValue(validNumbers, tempVal);
+        dropValue(validNumbers, validNumbers[tempVal]);
 
     }
 
