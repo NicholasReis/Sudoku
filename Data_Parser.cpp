@@ -18,6 +18,8 @@ std::vector< std::vector<int> > loadPuzzle(int size){
          {0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
     createPuzzle(5);
+    //Check for puzzles of this size and if one already exists
+    //If not create a new puzzle
     std::ifstream genFile("SudokuPuzzles");
     std::string game;
     getline(genFile, game);
@@ -35,7 +37,11 @@ std::vector< std::vector<int> > loadPuzzle(int size){
 }
 
 void createPuzzle(int size){
-    std::ofstream genFile("SudokuPuzzles");
+    std::fstream genFile("SudokuPuzzles");
+
+    //Search for "Size: xx" for puzzle size
+    //Then append a new line to fill here
+
     std::vector< std::vector<int> > board = getRandomValues();
     board = removeValues(board, size);
     for(int x = 0; x < 9; x++){
