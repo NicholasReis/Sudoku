@@ -4,20 +4,14 @@
 
 #include "Value_Generator.cpp"
 #include "Sudoku_Solver.cpp"
+#include "Data_Parser.cpp"
 
 
 void displayBoard(std::vector< std::vector<int> >);
 
 int main()
 {
-    //Retrieves the random (valid) values and puts them into a 2d vector
-    std::vector< std::vector<int> > board = getRandomValues();
-    displayBoard(board);
-    //Removes the pieces to create the puzzle
-    board = removeValues(board, 60);
-
-    //Displays the board
-    displayBoard(board);
+    displayBoard(loadPuzzle(4));
     
     return 0;
 }
