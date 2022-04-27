@@ -10,11 +10,14 @@ void displayBoard(std::vector< std::vector<int> >);
 
 int main()
 {
+    //Change this value for different boards. Increase for more empty cells, decrease for more populated boards.
+    int cellsToSolve = 40;
+    
     //Retrieves the random (valid) values and puts them into a 2d vector
     std::vector< std::vector<int> > board = getRandomValues();
     displayBoard(board);
     //Removes the pieces to create the puzzle
-    board = removeValues(board, 60);
+    board = removeValues(board, cellsToSolve);
 
     //Displays the board
     displayBoard(board);
